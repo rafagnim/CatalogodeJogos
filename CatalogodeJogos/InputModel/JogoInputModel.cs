@@ -17,5 +17,8 @@ namespace CatalogodeJogos.InputModel
         [Required]
         [Range(1, 1000, ErrorMessage = "O preço deve ser de no mínimo 1 real e no máximo 1000 reais")]
         public double Preco { get; set; }
+        [Required]
+        [Range(1, 5, ErrorMessage = "Atribua de 1 a 5 estrelas na avaliacao")]
+        public int Avaliacao { get; set; }
     }
 }

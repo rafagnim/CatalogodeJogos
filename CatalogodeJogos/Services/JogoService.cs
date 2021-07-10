@@ -28,8 +28,18 @@ namespace CatalogodeJogos.Services
                 Id = jogo.Id,
                 Nome = jogo.Nome,
                 Produtora = jogo.Produtora,
-                Preco = jogo.Preco
+                Preco = jogo.Preco,
+                Avaliacao = jogo.Avaliacao
             }).ToList();
+        }
+
+        public async Task<List<string>> ListarPorAvaliacao(int avaliacao)
+        {
+            List<string> jogosAvaliados = new List<string>();
+
+            jogosAvaliados = await _jogoRepository.ListarPorAvaliacao(avaliacao);
+
+            return jogosAvaliados;
         }
 
         public async Task<JogoViewModel> Obter(Guid id)
@@ -44,7 +54,8 @@ namespace CatalogodeJogos.Services
                 Id = jogo.Id,
                 Nome = jogo.Nome,
                 Produtora = jogo.Produtora,
-                Preco = jogo.Preco
+                Preco = jogo.Preco,
+                Avaliacao = jogo.Avaliacao
             };
         }
 
@@ -60,7 +71,8 @@ namespace CatalogodeJogos.Services
                 Id = Guid.NewGuid(),
                 Nome = jogo.Nome,
                 Produtora = jogo.Produtora,
-                Preco = jogo.Preco
+                Preco = jogo.Preco,
+                Avaliacao = jogo.Avaliacao
             };
 
             await _jogoRepository.Inserir(jogoInsert);
@@ -70,7 +82,8 @@ namespace CatalogodeJogos.Services
                 Id = jogoInsert.Id,
                 Nome = jogo.Nome,
                 Produtora = jogo.Produtora,
-                Preco = jogo.Preco
+                Preco = jogo.Preco,
+                Avaliacao = jogo.Avaliacao
             };
         }
 

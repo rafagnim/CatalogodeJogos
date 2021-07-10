@@ -45,6 +45,15 @@ namespace CatalogodeJogos.Controllers
             return Ok(jogo);
         }
 
+        [HttpGet("{avaliacao}")]
+        public async Task<List<string>> ListarPorAvaliacao([FromRoute] int avaliacao)
+        {
+            List<string> jogosAvaliados = new List<string>();
+            jogosAvaliados = await _jogoService.ListarPorAvaliacao(avaliacao);
+
+            return jogosAvaliados;
+        }
+
         [HttpPost]
         public async Task<ActionResult<JogoViewModel>> InserirJogo([FromBody] JogoInputModel jogoInputModel)
         {

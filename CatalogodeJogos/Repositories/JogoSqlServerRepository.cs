@@ -34,7 +34,8 @@ namespace CatalogodeJogos.Repositories
                     Id = (Guid)sqlDataReader["Id"],
                     Nome = (string)sqlDataReader["Nome"],
                     Produtora = (string)sqlDataReader["Produtora"],
-                    Preco = (double) Convert.ToDecimal(sqlDataReader ["Preco"])
+                    Preco = (double) Convert.ToDecimal(sqlDataReader ["Preco"]),
+                    Avaliacao = (int) Convert.ToInt16(sqlDataReader ["Avaliacao"])
                 }); ;
             }
 
@@ -60,7 +61,8 @@ namespace CatalogodeJogos.Repositories
                     Id = (Guid)sqlDataReader["Id"],
                     Nome = (string)sqlDataReader["Nome"],
                     Produtora = (string)sqlDataReader["Produtora"],
-                    Preco = (double)Convert.ToDecimal(sqlDataReader["Preco"])
+                    Preco = (double)Convert.ToDecimal(sqlDataReader["Preco"]),
+                    Avaliacao = (int)Convert.ToInt16(sqlDataReader["Avaliacao"])
                 };
             }
 
@@ -86,7 +88,8 @@ namespace CatalogodeJogos.Repositories
                     Id = (Guid)sqlDataReader["Id"],
                     Nome = (string)sqlDataReader["Nome"],
                     Produtora = (string)sqlDataReader["Produtora"],
-                    Preco = (double)Convert.ToDecimal(sqlDataReader["Preco"])
+                    Preco = (double)Convert.ToDecimal(sqlDataReader["Preco"]),
+                    Avaliacao = (int)Convert.ToInt16(sqlDataReader["Avaliacao"])
                 });
             }
 
@@ -97,7 +100,7 @@ namespace CatalogodeJogos.Repositories
 
         public async Task Inserir(Jogo jogo)
         {
-            var comando = $"insert Jogos (Id, Nome, Produtora, Preco) values ('{jogo.Id}', '{jogo.Nome}', '{jogo.Produtora}', {jogo.Preco.ToString().Replace(",", ".")})";
+            var comando = $"insert Jogos (Id, Nome, Produtora, Preco, Avaliacao) values ('{jogo.Id}', '{jogo.Nome}', '{jogo.Produtora}', {jogo.Preco.ToString().Replace(",", ".")}, {jogo.Avaliacao})";
 
             await sqlConnection.OpenAsync();
             SqlCommand sqlCommand = new SqlCommand(comando, sqlConnection);
@@ -123,6 +126,26 @@ namespace CatalogodeJogos.Repositories
             SqlCommand sqlCommand = new SqlCommand(comando, sqlConnection);
             sqlCommand.ExecuteNonQuery();
             await sqlConnection.CloseAsync();
+        }
+
+        public async Task<List<string>> ListarPorAvaliacao(int avaliacao)
+        {
+            List<string> jogosAvaliados = new List<string>();
+         
+            var comando = $"select Nome from Jogos where Avaliacao = {avaliacao}";
+
+            await sqlConnection.OpenAsync();
+            SqlCommand sqlCommand = new SqlCommand(comando, sqlConnection);
+            SqlDataReader sqlDataReader = await sqlCommand.ExecuteReaderAsync();
+
+            while (sqlDataReader.Read())
+            {
+                jogosAvaliados.Add(Convert.ToString(sqlDataReader["Nome"])) ;
+            }
+
+            await sqlConnection.CloseAsync();
+
+            return jogosAvaliados;
         }
 
         public void Dispose()
