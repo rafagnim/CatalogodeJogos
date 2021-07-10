@@ -1,4 +1,4 @@
-<h2>Sistema de gerenciamento de pessoas em API REST com Spring Boot</h2>
+<h2>Catálogo de Jogos - API ASP.NET</h2>
 
 Este API foi desenvolvido em aula proporcionada pela Digital Innovation One, através do desenvolvedor Thiago Campos de Oliveira.
 
